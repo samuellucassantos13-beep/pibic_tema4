@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Samuel Lucas">
+
+<title>PIBIC - Tema 4</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="teste_files/libs/clipboard/clipboard.min.js"></script>
+<script src="teste_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="teste_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="teste_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="teste_files/libs/quarto-html/popper.min.js"></script>
+<script src="teste_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="teste_files/libs/quarto-html/anchor.min.js"></script>
+<link href="teste_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="teste_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="teste_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="teste_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="teste_files/libs/bootstrap/bootstrap-53a3b7bc4bc1fba3b20a9b093d88d97f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#tensores" id="toc-tensores" class="nav-link active" data-scroll-target="#tensores"><span class="header-section-number">1</span> Tensores</a></li>
+  <li><a href="#modelo-elástico" id="toc-modelo-elástico" class="nav-link" data-scroll-target="#modelo-elástico"><span class="header-section-number">2</span> Modelo elástico</a>
+  <ul>
+  <li><a href="#tensor-de-deformação" id="toc-tensor-de-deformação" class="nav-link" data-scroll-target="#tensor-de-deformação"><span class="header-section-number">2.1</span> Tensor de deformação</a></li>
+  <li><a href="#tensor-de-tensões" id="toc-tensor-de-tensões" class="nav-link" data-scroll-target="#tensor-de-tensões"><span class="header-section-number">2.2</span> Tensor de tensões</a></li>
+  <li><a href="#lei-de-hooke-generalizada" id="toc-lei-de-hooke-generalizada" class="nav-link" data-scroll-target="#lei-de-hooke-generalizada"><span class="header-section-number">2.3</span> Lei de Hooke generalizada</a></li>
+  <li><a href="#equação-de-movimento" id="toc-equação-de-movimento" class="nav-link" data-scroll-target="#equação-de-movimento"><span class="header-section-number">2.4</span> Equação de movimento</a></li>
+  <li><a href="#teorema-de-helmholtz" id="toc-teorema-de-helmholtz" class="nav-link" data-scroll-target="#teorema-de-helmholtz"><span class="header-section-number">2.5</span> Teorema de Helmholtz</a>
+  <ul class="collapse">
+  <li><a href="#substituição-dos-potenciais-de-helmholtz-na-equação-de-navier" id="toc-substituição-dos-potenciais-de-helmholtz-na-equação-de-navier" class="nav-link" data-scroll-target="#substituição-dos-potenciais-de-helmholtz-na-equação-de-navier"><span class="header-section-number">2.5.1</span> Substituição dos potenciais de Helmholtz na equação de Navier</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#modelo-acústico" id="toc-modelo-acústico" class="nav-link" data-scroll-target="#modelo-acústico"><span class="header-section-number">3</span> Modelo acústico</a>
+  <ul>
+  <li><a href="#eliminando-o-campo-de-deslocamento" id="toc-eliminando-o-campo-de-deslocamento" class="nav-link" data-scroll-target="#eliminando-o-campo-de-deslocamento">Eliminando o campo de deslocamento</a></li>
+  <li><a href="#caso-particular-meio-homogêneo" id="toc-caso-particular-meio-homogêneo" class="nav-link" data-scroll-target="#caso-particular-meio-homogêneo">Caso particular: meio homogêneo</a></li>
+  </ul></li>
+  <li><a href="#pressão-e-deslocamento" id="toc-pressão-e-deslocamento" class="nav-link" data-scroll-target="#pressão-e-deslocamento"><span class="header-section-number">4</span> Pressão e deslocamento</a></li>
+  <li><a href="#sec-parametros" id="toc-sec-parametros" class="nav-link" data-scroll-target="#sec-parametros"><span class="header-section-number">5</span> Parâmetros do meio</a>
+  <ul>
+  <li><a href="#densidade" id="toc-densidade" class="nav-link" data-scroll-target="#densidade"><span class="header-section-number">5.1</span> Densidade</a></li>
+  <li><a href="#parâmetros-de-lamé" id="toc-parâmetros-de-lamé" class="nav-link" data-scroll-target="#parâmetros-de-lamé"><span class="header-section-number">5.2</span> Parâmetros de Lamé</a></li>
+  <li><a href="#módulo-de-compressibilidade" id="toc-módulo-de-compressibilidade" class="nav-link" data-scroll-target="#módulo-de-compressibilidade"><span class="header-section-number">5.3</span> Módulo de compressibilidade</a></li>
+  <li><a href="#velocidades-das-ondas-p-e-s" id="toc-velocidades-das-ondas-p-e-s" class="nav-link" data-scroll-target="#velocidades-das-ondas-p-e-s"><span class="header-section-number">5.4</span> Velocidades das ondas P e S</a></li>
+  <li><a href="#parâmetros-do-modelo-acústico" id="toc-parâmetros-do-modelo-acústico" class="nav-link" data-scroll-target="#parâmetros-do-modelo-acústico"><span class="header-section-number">5.5</span> Parâmetros do modelo acústico</a></li>
+  <li><a href="#meios-homogêneos-e-heterogêneos" id="toc-meios-homogêneos-e-heterogêneos" class="nav-link" data-scroll-target="#meios-homogêneos-e-heterogêneos"><span class="header-section-number">5.6</span> Meios homogêneos e heterogêneos</a></li>
+  </ul></li>
+  <li><a href="#limitações" id="toc-limitações" class="nav-link" data-scroll-target="#limitações"><span class="header-section-number">6</span> Limitações</a>
+  <ul>
+  <li><a href="#limitações-do-modelo-elástico" id="toc-limitações-do-modelo-elástico" class="nav-link" data-scroll-target="#limitações-do-modelo-elástico"><span class="header-section-number">6.1</span> Limitações do modelo elástico</a></li>
+  <li><a href="#limitações-do-modelo-acústico" id="toc-limitações-do-modelo-acústico" class="nav-link" data-scroll-target="#limitações-do-modelo-acústico"><span class="header-section-number">6.2</span> Limitações do modelo acústico</a></li>
+  </ul></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">PIBIC - Tema 4</h1>
+<p class="subtitle lead">Ondas acústicas e elásticas<br>Modelo acústico e modelo elástico, pressão, deslocamento, parâmetros do meio e limitações</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Samuel Lucas </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>Atualizado em:</strong> 24/11/2026</p>
+<section id="tensores" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Tensores</h1>
+<p>Seja <span class="math inline">\(V\)</span> um espaço vetorial sobre um corpo <span class="math inline">\(\mathbb K\)</span>, e seja <span class="math inline">\(V^*\)</span> seu espaço dual. Para <span class="math inline">\(r,s\in\mathbb N\)</span>, com <span class="math inline">\(r+s\neq 0\)</span>, um tensor do tipo <span class="math inline">\((r,s)\)</span> sobre <span class="math inline">\(V\)</span> é um funcional multilinear</p>
+<p><span class="math display">\[
+T:
+\underbrace{V^*\times\cdots\times V^*}_{r\text{ fatores}}
+\times
+\underbrace{V\times\cdots\times V}_{s\text{ fatores}}
+\longrightarrow \mathbb K.
+\]</span></p>
+<p>O espaço vetorial constituído por todos os tensores desse tipo é denotado por</p>
+<p><span class="math display">\[
+T^r_s(V).
+\]</span></p>
+<p>Mais geralmente, um campo tensorial do tipo <span class="math inline">\((r,s)\)</span> é uma aplicação que associa a cada ponto <span class="math inline">\(\mathbf{x}\)</span> de uma região <span class="math inline">\(E\)</span> um tensor do tipo <span class="math inline">\((r,s)\)</span> sobre <span class="math inline">\(V\)</span>. Quando consideramos também a dependência temporal, podemos escrever</p>
+<p><span class="math display">\[
+T:E\times I\longrightarrow T^r_s(V),
+\]</span></p>
+<p>em que <span class="math inline">\(I\subseteq\mathbb R\)</span> representa o intervalo de tempo considerado.</p>
+<p>Nesse caso, para cada ponto <span class="math inline">\(\mathbf{x}\in E\)</span> e instante <span class="math inline">\(t\in I\)</span>, temos um tensor</p>
+<p><span class="math display">\[
+T_{\mathbf{x},t}\in T^r_s(V).
+\]</span></p>
+<p>Portanto, um campo tensorial associa um tensor a cada ponto da região considerada e a cada instante de tempo. Assim, os tensores que representam as grandezas físicas podem variar tanto espacialmente quanto temporalmente.</p>
+<p>Neste trabalho, consideraremos <span class="math inline">\(E\subseteq\mathbb R^3\)</span> como a região espacial na qual os campos estão definidos e adotaremos <span class="math inline">\(V=\mathbb R^3\)</span> como espaço vetorial. Dessa forma, os tensores associados a cada ponto <span class="math inline">\(\mathbf{x}\in E\)</span> e instante <span class="math inline">\(t\in I\)</span> pertencem a <span class="math inline">\(T^r_s(\mathbb R^3)\)</span>.</p>
+</section>
+<section id="modelo-elástico" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Modelo elástico</h1>
+<p>Diz-se que um meio é elástico se ele possui um estado natural no qual deformações e tensões são nulas, ao qual retorna quando as forças aplicadas são removidas. Sob a ação de cargas aplicadas, tensão e deformação variam em conjunto, e a relação entre elas, chamada relação constitutiva, é uma característica importante do meio.</p>
+<section id="tensor-de-deformação" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="tensor-de-deformação"><span class="header-section-number">2.1</span> Tensor de deformação</h2>
+<p>Considere uma região <span class="math inline">\(G\subset\mathbb{R}^3\)</span> e <span class="math inline">\(G'\)</span>, essa região após uma deformação elástica. Consideramos duas partículas em <span class="math inline">\(G\)</span>, em que uma está na posição <span class="math inline">\(\mathbf{x}\)</span> e a outra em <span class="math inline">\(\mathbf{x}+\delta\mathbf{x}\)</span>. Após sofrerem a deformação, elas vão para <span class="math inline">\(\mathbf{x}+\mathbf{u}(\mathbf{x})\)</span> e <span class="math inline">\(\mathbf{x}+\delta\mathbf{x}+\mathbf{u}(\mathbf{x}+\delta\mathbf{x})\)</span>, respectivamente. Em <span class="math inline">\(G\)</span>, <span class="math inline">\(\delta\mathbf{x}\)</span> é o vetor que liga as duas partículas. Queremos saber o que acontece com <span class="math inline">\(\delta\mathbf{x}\)</span> após sofrer a transformação. Tomando que o vetor novo é dado por <span class="math inline">\(\delta\mathbf{x}+\delta\mathbf{u}=\text{posição final}-\text{posição inicial}\)</span>, temos que</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="teste_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>deslocamento entre partículas em G e G’</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="math display">\[
+\delta\mathbf{u}=\mathbf{u}(\mathbf{x}+\delta\mathbf{x})-\mathbf{u}(\mathbf{x}).
+\]</span></p>
+<p>Considerando pequenas deformações, expandimos <span class="math inline">\(\mathbf{u}(\mathbf{x}+\delta\mathbf{x})\)</span> em série de Taylor:</p>
+<p><span class="math display">\[
+\mathbf u(\mathbf x+\delta\mathbf x)
+=
+\mathbf u(\mathbf x)
++
+(\delta\mathbf x\cdot\nabla)\mathbf u
++
+O(\|\delta\mathbf x\|^2),
+\]</span></p>
+<p>de modo que</p>
+<p><span class="math display">\[
+\delta\mathbf u
+=
+(\delta\mathbf x\cdot\nabla)\mathbf u
++
+O(\|\delta\mathbf x\|^2).
+\]</span></p>
+<p>Em primeira ordem, temos:</p>
+<p><span class="math display">\[
+\delta u_i
+=
+\partial_j u_i\,\delta x_j.
+\]</span></p>
+<p>Seja <span class="math inline">\(A\)</span> o operador linear cuja matriz, em uma base ortonormal, tem componentes <span class="math inline">\(A_{ij}=\partial_j u_i\)</span>, de modo que <span class="math inline">\(\delta\mathbf u=A\,\delta\mathbf x\)</span>. É possível decompor esse operador em uma parte simétrica e uma antissimétrica usando um operador autoadjunto e um antiadjunto, pois <span class="math inline">\(\mathbb{R}^3\)</span> é um espaço de Hilbert. Decompondo, obtemos <span class="math inline">\(L=\frac12(A+A^*)+\frac12(A-A^*)\)</span>. Para o caso de <span class="math inline">\(\mathbb{R}^3\)</span> com bases ortonormais, temos:</p>
+<p><span class="math display">\[
+\delta u_i
+=
+\frac12(\partial_j u_i+\partial_i u_j)\,\delta x_j
++
+\frac12(\partial_j u_i-\partial_i u_j)\,\delta x_j.
+\]</span></p>
+<p>É possível mostrar que a parte antissimétrica está relacionada com rotações, não afetando as deformações; podemos, portanto, desconsiderá-la. Escrevendo apenas a parte simétrica, obtemos e definimos:</p>
+<p><span id="eq-deformacao"><span class="math display">\[
+\epsilon_{ij}=\frac12\left(\partial_j u_i+\partial_i u_j\right)
+\tag{1}\]</span></span></p>
+<p>como tensor de deformação.</p>
+</section>
+<section id="tensor-de-tensões" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="tensor-de-tensões"><span class="header-section-number">2.2</span> Tensor de tensões</h2>
+<p>Queremos estudar como as trações atuam em superfícies. Primeiro, podemos considerar que, pela terceira lei de Newton, as trações atuam em pares, <span class="math inline">\(\mathbf{t}(-\mathbf{n})=-\mathbf{t}(\mathbf{n})\)</span>. A partir disso, podemos utilizar o resultado do tetraedro de Cauchy para descrever as trações em uma superfície por meio de vetores normais e do tensor de tensões <span class="math inline">\(\sigma_{ij}\)</span>, obtendo <span class="math inline">\(t^n_i=\sigma_{ij}n_j\)</span>.</p>
+</section>
+<section id="lei-de-hooke-generalizada" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="lei-de-hooke-generalizada"><span class="header-section-number">2.3</span> Lei de Hooke generalizada</h2>
+<p>Podemos relacionar o tensor de deformação e o tensor de tensões utilizando um outro tensor, da seguinte forma</p>
+<p><span id="eq-hooke-geral"><span class="math display">\[
+\sigma_{ij}=c_{ijkl}\,\epsilon_{kl},
+\tag{2}\]</span></span></p>
+<p>em que <span class="math inline">\(c_{ijkl}\)</span> denota um tensor de ordem 4 que pode ser representado por uma aplicação <span class="math inline">\(T^0_2(V)\to T^0_2(V)\)</span>. Com isso, obtemos uma expressão para o tensor das tensões. Devido às simetrias de <span class="math inline">\(\sigma_{ij}\)</span> e <span class="math inline">\(\epsilon_{kl}\)</span>, o tensor <span class="math inline">\(c_{ijkl}\)</span> satisfaz <span class="math inline">\(c_{ijkl}=c_{jikl}=c_{ijlk}\)</span>. Para um meio isotrópico, podemos reduzir as componentes independentes desse tensor e obter uma nova expressão que representa as mesmas propriedades físicas em qualquer base escolhida:</p>
+<p><span id="eq-cijkl-isotropico"><span class="math display">\[
+c_{ijkl} =
+\lambda\, \delta_{ij}\delta_{kl}
++ \mu\left(
+\delta_{ik}\delta_{jl}
++ \delta_{il}\delta_{jk}
+\right).
+\tag{3}\]</span></span></p>
+<p>Substituindo a <a href="#eq-cijkl-isotropico" class="quarto-xref">Equação&nbsp;3</a> na <a href="#eq-hooke-geral" class="quarto-xref">Equação&nbsp;2</a>, obtemos</p>
+<p><span id="eq-hooke-isotropico"><span class="math display">\[
+\sigma_{ij} =
+\lambda\, \epsilon_{kk}\, \delta_{ij}
++ 2\mu\, \epsilon_{ij}.
+\tag{4}\]</span></span></p>
+</section>
+<section id="equação-de-movimento" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="equação-de-movimento"><span class="header-section-number">2.4</span> Equação de movimento</h2>
+<p>Considere um elemento infinitesimal de volume <span class="math inline">\(\mathrm{d}V\)</span> em um sistema de coordenadas cartesiano definido pela base gerada por <span class="math inline">\(\mathbf{e}_1\)</span>, <span class="math inline">\(\mathbf{e}_2\)</span> e <span class="math inline">\(\mathbf{e}_3\)</span>.</p>
+<p>Nesse elemento existem duas forças atuando: forças de corpo e forças de contato. As forças de contato são definidas pela tração <span class="math inline">\(\mathbf{t}^n\)</span> atuando em toda a superfície <span class="math inline">\(S\)</span> que envolve o elemento, enquanto as forças de corpo <span class="math inline">\(\mathbf{f}\)</span> são forças intrínsecas ao elemento <span class="math inline">\(\mathrm{d}V\)</span>, associadas à sua massa.</p>
+<p>Sendo assim, é possível aplicar a segunda lei de Newton a esse elemento. Sabendo que a densidade é dada por</p>
+<p><span class="math display">\[
+\rho = \frac{\mathrm{d}m}{\mathrm{d}V},
+\]</span></p>
+<p>a equação do movimento pode ser escrita na forma integral como</p>
+<p><span id="eq-newton-integral"><span class="math display">\[
+\int_V \rho \, \partial_t^2 \mathbf{u} \, \mathrm{d}V
+=
+\int_S \mathbf{t}^n \, \mathrm{d}S
++
+\int_V \mathbf{f} \, \mathrm{d}V,
+\tag{5}\]</span></span></p>
+<p>em que <span class="math inline">\(\mathbf{u}\)</span> é o vetor deslocamento, <span class="math inline">\(\mathbf{t}^n\)</span> é o vetor de tração na superfície de normal <span class="math inline">\(\mathbf{n}\)</span> e <span class="math inline">\(\mathbf{f}\)</span> é a força de corpo por unidade de volume. Pelo resultado do tetraedro de Cauchy,</p>
+<p><span id="eq-cauchy"><span class="math display">\[
+t^n_i = \sigma_{ij}\, n_j,
+\qquad\text{ou, em notação vetorial,}\qquad
+\mathbf{t}^n = \boldsymbol{\sigma} \cdot \mathbf{n}.
+\tag{6}\]</span></span></p>
+<p>Substituindo a <a href="#eq-cauchy" class="quarto-xref">Equação&nbsp;6</a> na integral de superfície da <a href="#eq-newton-integral" class="quarto-xref">Equação&nbsp;5</a>, obtemos</p>
+<p><span id="eq-newton-cauchy"><span class="math display">\[
+\int_V \rho \, \partial_t^2 \mathbf{u} \, \mathrm{d}V
+=
+\int_S \boldsymbol{\sigma} \cdot \mathbf{n} \, \mathrm{d}S
++
+\int_V \mathbf{f} \, \mathrm{d}V.
+\tag{7}\]</span></span></p>
+<p>Aplicando o teorema da divergência à integral de superfície, é possível converter a <a href="#eq-newton-cauchy" class="quarto-xref">Equação&nbsp;7</a> em uma equação puramente de volume:</p>
+<p><span class="math display">\[
+\int_V \left(
+    \rho \, \partial_t^2 \mathbf{u}
+    - \nabla \cdot \boldsymbol{\sigma}
+    - \mathbf{f}
+\right) \mathrm{d}V = 0.
+\]</span></p>
+<p>Como o volume <span class="math inline">\(V\)</span> é arbitrário, o integrando deve se anular em todo ponto do meio, o que fornece a forma diferencial:</p>
+<p><span id="eq-movimento-diferencial"><span class="math display">\[
+\rho \, \partial_t^2 \mathbf{u} = \nabla \cdot \boldsymbol{\sigma} + \mathbf{f},
+\qquad\text{ou, em notação indicial,}\qquad
+\rho \, \partial_t^2 u_i = \partial_j \sigma_{ij} + f_i.
+\tag{8}\]</span></span></p>
+<p>Essa relação é válida tanto para o modelo elástico quanto para o modelo acústico, diferindo apenas na forma do tensor de tensões <span class="math inline">\(\boldsymbol{\sigma}\)</span> em função das propriedades do meio. Reunindo os resultados anteriores, o problema elastodinâmico é descrito pelo seguinte sistema de equações acopladas: a equação de movimento, incluindo um termo de fonte <span class="math inline">\(M_{ij}\)</span>, associado, por exemplo, a um tensor de momento sísmico,</p>
+<p><span id="eq-movimento-geral"><span class="math display">\[
+\rho\, \partial_t^2 u_i =
+\partial_j\left(\sigma_{ij} + M_{ij}\right) + f_i,
+\tag{9}\]</span></span></p>
+<p>o tensor de tensões para meios isotrópicos,</p>
+<p><span id="eq-hooke-final"><span class="math display">\[
+\sigma_{ij} =
+\lambda\, \epsilon_{kk}\, \delta_{ij}
++ 2\mu\, \epsilon_{ij},
+\tag{10}\]</span></span></p>
+<p>e o tensor de deformação,</p>
+<p><span id="eq-deformacao-final"><span class="math display">\[
+\epsilon_{kl} =
+\frac{1}{2}\left(\partial_k u_l + \partial_l u_k\right).
+\tag{11}\]</span></span></p>
+<p>Calculando a divergência do tensor de tensões (<a href="#eq-hooke-final" class="quarto-xref">Equação&nbsp;10</a>), para <span class="math inline">\(\lambda\)</span> e <span class="math inline">\(\mu\)</span> constantes, temos</p>
+<p><span class="math display">\[
+\partial_j \sigma_{ij}
+=
+\lambda\, \partial_i(\partial_k u_k)
++
+\mu\, \partial_j(\partial_i u_j + \partial_j u_i)
+=
+(\lambda + \mu)\, \partial_i(\partial_k u_k)
++
+\mu\, \partial_j \partial_j u_i.
+\]</span></p>
+<p>Substituindo esse resultado na <a href="#eq-movimento-geral" class="quarto-xref">Equação&nbsp;9</a>, obtemos</p>
+<p><span id="eq-navier-indicial"><span class="math display">\[
+\rho\, \partial_t^2 u_i
+=
+(\lambda + \mu)\, \partial_i(\partial_k u_k)
++ \mu\, \partial_j \partial_j u_i
++ \partial_j M_{ij}
++ f_i,
+\qquad i = 1, 2, 3.
+\tag{12}\]</span></span></p>
+<p>Escrevendo explicitamente cada uma das três componentes:</p>
+<p><span id="eq-navier-tres-componentes"><span class="math display">\[
+\begin{aligned}
+\rho\, \partial_t^2 u_1
+&amp;=
+(\lambda + \mu)\,
+\partial_1\big(
+\partial_1 u_1 + \partial_2 u_2 + \partial_3 u_3
+\big)
++
+\mu\big(
+\partial_1^2 u_1
++ \partial_2^2 u_1
++ \partial_3^2 u_1
+\big)
++ \partial_j M_{1j} + f_1,
+\\[4pt]
+\rho\, \partial_t^2 u_2
+&amp;=
+(\lambda + \mu)\,
+\partial_2\big(
+\partial_1 u_1 + \partial_2 u_2 + \partial_3 u_3
+\big)
++
+\mu\big(
+\partial_1^2 u_2
++ \partial_2^2 u_2
++ \partial_3^2 u_2
+\big)
++ \partial_j M_{2j} + f_2,
+\\[4pt]
+\rho\, \partial_t^2 u_3
+&amp;=
+(\lambda + \mu)\,
+\partial_3\big(
+\partial_1 u_1 + \partial_2 u_2 + \partial_3 u_3
+\big)
++
+\mu\big(
+\partial_1^2 u_3
++ \partial_2^2 u_3
++ \partial_3^2 u_3
+\big)
++ \partial_j M_{3j} + f_3.
+\end{aligned}
+\tag{13}\]</span></span></p>
+<p>Usando as definições</p>
+<p><span class="math display">\[
+\nabla \cdot \mathbf{u}
+\equiv
+\partial_1 u_1 + \partial_2 u_2 + \partial_3 u_3,
+\qquad
+\nabla^2 u_i
+\equiv
+\partial_1^2 u_i
++ \partial_2^2 u_i
++ \partial_3^2 u_i,
+\]</span></p>
+<p>a <a href="#eq-navier-tres-componentes" class="quarto-xref">Equação&nbsp;13</a> se torna</p>
+<p><span id="eq-navier-vetorial"><span class="math display">\[
+\rho\, \partial_t^2 \mathbf{u}
+=
+(\lambda + \mu)\, \nabla(\nabla \cdot \mathbf{u})
++ \mu\, \nabla^2 \mathbf{u}
++ \nabla \cdot \mathbf{M}
++ \mathbf{f}.
+\tag{14}\]</span></span></p>
+<p>Essa relação descreve simultaneamente a propagação das ondas P e S em um meio isotrópico caracterizado pelos parâmetros <span class="math inline">\(\rho\)</span>, <span class="math inline">\(\lambda\)</span> e <span class="math inline">\(\mu\)</span>. No entanto, por acoplar as três componentes de <span class="math inline">\(\mathbf{u}\)</span> através dos termos <span class="math inline">\(\nabla(\nabla\cdot\mathbf{u})\)</span> e <span class="math inline">\(\nabla^2\mathbf{u}\)</span>, essa forma não separa explicitamente os dois tipos de onda.</p>
+</section>
+<section id="teorema-de-helmholtz" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="teorema-de-helmholtz"><span class="header-section-number">2.5</span> Teorema de Helmholtz</h2>
+<p>O teorema de Helmholtz estabelece que qualquer campo vetorial suficientemente regular <span class="math inline">\(\mathbf{u}(\mathbf{x}, t)\)</span> pode ser decomposto de forma única na soma de uma parte irrotacional e uma parte solenoidal:</p>
+<p><span id="eq-helmholtz"><span class="math display">\[
+\mathbf{u} =
+\nabla \phi +
+\nabla \times \boldsymbol{\Psi},
+\tag{15}\]</span></span></p>
+<p>em que <span class="math inline">\(\phi\)</span> é um potencial escalar e <span class="math inline">\(\boldsymbol{\Psi}\)</span> é um potencial vetorial, sujeito à condição <span class="math inline">\(\nabla \cdot \boldsymbol{\Psi} = 0\)</span>.</p>
+<section id="substituição-dos-potenciais-de-helmholtz-na-equação-de-navier" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="substituição-dos-potenciais-de-helmholtz-na-equação-de-navier"><span class="header-section-number">2.5.1</span> Substituição dos potenciais de Helmholtz na equação de Navier</h3>
+<p>Substitui-se a decomposição de Helmholtz, <a href="#eq-helmholtz" class="quarto-xref">Equação&nbsp;15</a>, na relação <a href="#eq-navier-vetorial" class="quarto-xref">Equação&nbsp;14</a>, desconsiderando a presença de fontes (<span class="math inline">\(\mathbf{f} = \mathbf{0}\)</span>, <span class="math inline">\(\mathbf{M} = \mathbf{0}\)</span>), de modo que a relação de movimento se reduz a</p>
+<p><span id="eq-navier-sem-fonte"><span class="math display">\[
+\rho\, \partial_t^2 \mathbf{u}
+=
+(\lambda + \mu)\,
+\nabla(\nabla \cdot \mathbf{u})
++
+\mu\, \nabla^2 \mathbf{u}.
+\tag{16}\]</span></span></p>
+<p>Reagrupando os termos do tipo gradiente de um lado e os do tipo rotacional do outro,</p>
+<p><span id="eq-navier-reagrupada"><span class="math display">\[
+\nabla\underbrace{\left[
+    \rho\, \partial_t^2 \phi
+    -
+    (\lambda + 2\mu)\, \nabla^2 \phi
+\right]}_{\displaystyle \equiv\, A(\mathbf{x},t)}
++
+\nabla \times \underbrace{\left[
+    \rho\, \partial_t^2 \boldsymbol{\Psi}
+    -
+    \mu\, \nabla^2 \boldsymbol{\Psi}
+\right]}_{\displaystyle \equiv\, \mathbf{B}(\mathbf{x},t)}
+= \mathbf{0}.
+\tag{17}\]</span></span></p>
+<p>Porém, isso não garante que <span class="math inline">\(A\)</span> e <span class="math inline">\(\mathbf{B}\)</span> sejam iguais a zero. Para isso, devemos construir os potenciais devidamente, usando o teorema de Lamé, que constrói os potenciais fazendo com que <span class="math inline">\(A\)</span> e <span class="math inline">\(\mathbf{B}\)</span> sejam iguais a zero. Ao fazer isso, obtemos a equação de movimento desacoplada, em que temos uma parte associada às ondas P e outra às ondas S, com suas respectivas velocidades.</p>
+<p><img src="resultados_acustica_elastica/06_elastica_individual.gif" class="img-fluid"></p>
+</section>
+</section>
+</section>
+<section id="modelo-acústico" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Modelo acústico</h1>
+<p>O modelo acústico é construído com a hipótese de um meio de propagação fluido, ou seja, com <span class="math inline">\(\mu=0\)</span>. Para um fluido, a pressão é dada por <span class="math inline">\(P=-\mathbf{n}\cdot\mathbf{t}^n\)</span>. Utilizando</p>
+<p><span class="math display">\[
+t^n_i=\sigma_{ij}n_j,
+\]</span></p>
+<p>obtemos</p>
+<p><span class="math display">\[
+P=-n_i\sigma_{ij}n_j.
+\]</span></p>
+<p>Considerando fluidos isotrópicos, o que exige que a pressão seja a mesma para todo <span class="math inline">\(\mathbf{n}\)</span>, temos <span class="math inline">\(\sigma_{ij}=-P\delta_{ij}\)</span>. Usando o tensor de tensões para meios isotrópicos com <span class="math inline">\(\mu=0\)</span>, chegamos à relação</p>
+<p><span id="eq-p-div"><span class="math display">\[
+P=-K\,\nabla\cdot\mathbf u,
+\tag{18}\]</span></span></p>
+<p>em que <span class="math inline">\(K\)</span> é o módulo de compressibilidade (<a href="#sec-parametros" class="quarto-xref">Seção&nbsp;5</a>).</p>
+<p>Partimos da equação de movimento, <a href="#eq-movimento-diferencial" class="quarto-xref">Equação&nbsp;8</a>, sem forças de corpo, e utilizando a relação <span class="math inline">\(\sigma_{ij}=-P\delta_{ij}\)</span>, obtemos</p>
+<p><span id="eq-ac-movimento"><span class="math display">\[
+\rho(\mathbf{x})\,\partial_t^2\mathbf{u}
+=
+-\nabla P.
+\tag{19}\]</span></span></p>
+<p>Utilizamos também a <a href="#eq-p-div" class="quarto-xref">Equação&nbsp;18</a> com <span class="math inline">\(K=K(\mathbf{x})\)</span>:</p>
+<p><span class="math display">\[
+P=-K(\mathbf{x})\,\nabla\cdot\mathbf{u}.
+\]</span></p>
+<p>Derivando a <a href="#eq-p-div" class="quarto-xref">Equação&nbsp;18</a> duas vezes em relação ao tempo:</p>
+<p><span class="math display">\[
+\partial_t^2 P
+=
+-K(\mathbf{x})\,
+\partial_t^2\left(\nabla\cdot\mathbf{u}\right).
+\]</span></p>
+<p>Como <span class="math inline">\(K\)</span> depende somente da posição, podemos mantê-lo fora da derivada temporal. Além disso, para campos suficientemente regulares, podemos comutar as derivadas espaciais e temporais. Assim,</p>
+<p><span id="eq-ac-p-tt"><span class="math display">\[
+\partial_t^2 P
+=
+-K(\mathbf{x})\,\nabla\cdot
+\left(
+\partial_t^2\mathbf{u}
+\right).
+\tag{20}\]</span></span></p>
+<section id="eliminando-o-campo-de-deslocamento" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="eliminando-o-campo-de-deslocamento">Eliminando o campo de deslocamento</h3>
+<p>Agora, isolamos a aceleração na <a href="#eq-ac-movimento" class="quarto-xref">Equação&nbsp;19</a>:</p>
+<p><span id="eq-ac-aceleracao"><span class="math display">\[
+\partial_t^2\mathbf{u}
+=
+-\frac{1}{\rho(\mathbf{x})}\nabla P.
+\tag{21}\]</span></span></p>
+<p>Substituindo a <a href="#eq-ac-aceleracao" class="quarto-xref">Equação&nbsp;21</a> na <a href="#eq-ac-p-tt" class="quarto-xref">Equação&nbsp;20</a>:</p>
+<p><span class="math display">\[
+\partial_t^2 P
+=
+-K(\mathbf{x})\,\nabla\cdot
+\left(
+-\frac{1}{\rho(\mathbf{x})}\nabla P
+\right).
+\]</span></p>
+<p>Pela linearidade do operador divergente:</p>
+<p><span class="math display">\[
+\partial_t^2 P
+=
+K(\mathbf{x})\,\nabla\cdot
+\left(
+\frac{1}{\rho(\mathbf{x})}\nabla P
+\right),
+\]</span></p>
+</section>
+<section id="caso-particular-meio-homogêneo" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="caso-particular-meio-homogêneo">Caso particular: meio homogêneo</h3>
+<p>Para um meio homogêneo, consideramos a densidade e o módulo de compressibilidade constantes. Dessa forma, podemos escrever:</p>
+<p><span class="math display">\[
+\frac{1}{K}\,\partial_t^2 P
+-
+\frac{1}{\rho}\nabla^2P
+=0.
+\]</span></p>
+<p><span class="math display">\[
+\partial_t^2 P
+-
+\frac{K}{\rho}\nabla^2P
+=0.
+\]</span></p>
+<p>Definindo a velocidade de propagação acústica como</p>
+<p><span class="math display">\[
+c_a^2=\frac{K}{\rho},
+\]</span></p>
+<p>obtemos a equação clássica da onda acústica:</p>
+<p><span id="eq-onda-acustica"><span class="math display">\[
+\partial_t^2 P
+-c_a^2\nabla^2P=0.
+\tag{22}\]</span></span></p>
+<p>Essa é a equação que descreve o modelo acústico, podendo ser obtida diretamente do teorema de Helmholtz. Essa equação não admite a presença de ondas S, pois <span class="math inline">\(\mu=0\)</span>; não há tensão de cisalhamento e <span class="math inline">\(K=\lambda\)</span> nesse caso. Diferentemente do modelo elástico, as soluções dessa EDP podem ser obtidas na forma da simples separação de variáveis para a ausência de fontes e via funções de Green para a presença de fontes.</p>
+<p><img src="resultados_acustica_elastica/05_acustica_individual.gif" class="img-fluid"></p>
+</section>
+</section>
+<section id="pressão-e-deslocamento" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Pressão e deslocamento</h1>
+<p>A pressão pode ser obtida através do deslocamento, sendo uma grandeza escalar utilizada para descrever o modelo acústico; o deslocamento é uma grandeza vetorial usada para descrever o modelo elastico:</p>
+<p><span class="math display">\[
+P=P(\mathbf{x},t),
+\qquad
+\mathbf{u}=\big(u_1(\mathbf{x},t),u_2(\mathbf{x},t),u_3(\mathbf{x},t)\big),
+\qquad
+\mathbf{x}=(x_1,x_2,x_3).
+\]</span></p>
+</section>
+<section id="sec-parametros" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Parâmetros do meio</h1>
+<p>A propagação das ondas sísmicas depende das propriedades físicas e elásticas do meio. Para um sólido elástico, linear e isotrópico, o comportamento mecânico pode ser descrito pela densidade <span class="math inline">\(\rho\)</span> e por dois parâmetros elásticos independentes, usualmente escolhidos como os parâmetros de Lamé <span class="math inline">\(\lambda\)</span> e <span class="math inline">\(\mu\)</span>. Esses parâmetros, juntamente com a densidade, determinam as velocidades de propagação das ondas.</p>
+<section id="densidade" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="densidade"><span class="header-section-number">5.1</span> Densidade</h2>
+<p>A densidade representa a massa por unidade de volume e é definida por</p>
+<p><span class="math display">\[
+\rho = \frac{\mathrm{d}m}{\mathrm{d}V}.
+\]</span></p>
+<p>Sua unidade no Sistema Internacional é</p>
+<p><span class="math display">\[
+[\rho] = \mathrm{kg/m^3}.
+\]</span></p>
+</section>
+<section id="parâmetros-de-lamé" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="parâmetros-de-lamé"><span class="header-section-number">5.2</span> Parâmetros de Lamé</h2>
+<p>Em um meio elástico, linear e isotrópico, a relação entre tensão e deformação pode ser escrita como</p>
+<p><span class="math display">\[
+\sigma_{ij}
+=
+\lambda\epsilon_{kk}\delta_{ij}
++
+2\mu\epsilon_{ij}.
+\]</span></p>
+<p>Os coeficientes <span class="math inline">\(\lambda\)</span> e <span class="math inline">\(\mu\)</span> são denominados parâmetros de Lamé. O parâmetro <span class="math inline">\(\mu\)</span> é também denominado módulo de cisalhamento ou módulo de rigidez. Ele representa a resistência do material à deformação por cisalhamento. Já <span class="math inline">\(\lambda\)</span> está associado à resposta do material à deformação volumétrica.</p>
+<p>Os parâmetros <span class="math inline">\(\lambda\)</span> e <span class="math inline">\(\mu\)</span> possuem dimensão de tensão:</p>
+<p><span class="math display">\[
+[\lambda]
+=
+[\mu]
+=
+\mathrm{Pa}.
+\]</span></p>
+</section>
+<section id="módulo-de-compressibilidade" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="módulo-de-compressibilidade"><span class="header-section-number">5.3</span> Módulo de compressibilidade</h2>
+<p>Um parâmetro frequentemente utilizado para caracterizar a resistência do material à compressão volumétrica é o módulo de compressibilidade,</p>
+<p><span id="eq-k"><span class="math display">\[
+K
+=
+\lambda
++
+\frac{2}{3}\mu.
+\tag{23}\]</span></span></p>
+<p>Sua unidade no Sistema Internacional é o Pascal:</p>
+<p><span class="math display">\[
+[K] = \mathrm{Pa}.
+\]</span></p>
+</section>
+<section id="velocidades-das-ondas-p-e-s" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="velocidades-das-ondas-p-e-s"><span class="header-section-number">5.4</span> Velocidades das ondas P e S</h2>
+<p>As propriedades elásticas e a densidade determinam as velocidades das ondas sísmicas em um meio isotrópico.</p>
+<p>A velocidade da onda P é</p>
+<p><span class="math display">\[
+V_P
+=
+\sqrt{
+\frac{\lambda+2\mu}{\rho}
+}.
+\]</span></p>
+<p>Utilizando a <a href="#eq-k" class="quarto-xref">Equação&nbsp;23</a>, a expressão pode ser escrita como</p>
+<p><span class="math display">\[
+V_P
+=
+\sqrt{
+\frac{K+\frac{4}{3}\mu}{\rho}
+}.
+\]</span></p>
+<p>A velocidade da onda S é</p>
+<p><span class="math display">\[
+V_S
+=
+\sqrt{
+\frac{\mu}{\rho}
+}.
+\]</span></p>
+<p>Portanto, a velocidade da onda P depende da densidade, da resistência à compressão e da resistência ao cisalhamento, enquanto a velocidade da onda S depende diretamente do módulo de cisalhamento e da densidade:</p>
+<p><span class="math display">\[
+V_P
+=
+V_P(\lambda,\mu,\rho)
+\qquad\text{e}\qquad
+V_S
+=
+V_S(\mu,\rho).
+\]</span></p>
+<p>A ausência de rigidez ao cisalhamento em um meio implica</p>
+<p><span class="math display">\[
+\mu=0,
+\]</span></p>
+<p>e, consequentemente,</p>
+<p><span class="math display">\[
+V_S=0.
+\]</span></p>
+</section>
+<section id="parâmetros-do-modelo-acústico" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="parâmetros-do-modelo-acústico"><span class="header-section-number">5.5</span> Parâmetros do modelo acústico</h2>
+<p>No modelo acústico, considera-se que o meio não apresenta resistência ao cisalhamento. Assim,</p>
+<p><span class="math display">\[
+\mu=0.
+\]</span></p>
+<p>Nesse caso,</p>
+<p><span class="math display">\[
+K=\lambda
+\]</span></p>
+<p>e a velocidade da onda compressional torna-se</p>
+<p><span class="math display">\[
+c_a
+=
+\sqrt{\frac{K}{\rho}}
+=
+\sqrt{\frac{\lambda}{\rho}}.
+\]</span></p>
+</section>
+<section id="meios-homogêneos-e-heterogêneos" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="meios-homogêneos-e-heterogêneos"><span class="header-section-number">5.6</span> Meios homogêneos e heterogêneos</h2>
+<p>Os parâmetros físicos e elásticos podem ser constantes ou variar espacialmente.</p>
+<p>Para um meio homogêneo,</p>
+<p><span class="math display">\[
+\rho(\mathbf{x})=\rho_0,
+\qquad
+\lambda(\mathbf{x})=\lambda_0,
+\qquad
+\mu(\mathbf{x})=\mu_0.
+\]</span></p>
+<p>Nesse caso, as propriedades do meio são independentes da posição.</p>
+<p>Em um meio heterogêneo, esses parâmetros variam espacialmente:</p>
+<p><span class="math display">\[
+\rho=\rho(\mathbf{x}),
+\qquad
+\lambda=\lambda(\mathbf{x}),
+\qquad
+\mu=\mu(\mathbf{x}).
+\]</span></p>
+<p>Consequentemente, as velocidades das ondas também variam no espaço:</p>
+<p><span class="math display">\[
+V_P(\mathbf{x})
+=
+\sqrt{
+\frac{
+\lambda(\mathbf{x})
++
+2\mu(\mathbf{x})
+}
+{\rho(\mathbf{x})}
+},
+\]</span></p>
+<p><span class="math display">\[
+V_S(\mathbf{x})
+=
+\sqrt{
+\frac{
+\mu(\mathbf{x})
+}
+{\rho(\mathbf{x})}
+}.
+\]</span></p>
+<p>Para o modelo acústico,</p>
+<p><span class="math display">\[
+c_a(\mathbf{x})
+=
+\sqrt{
+\frac{K(\mathbf{x})}
+{\rho(\mathbf{x})}
+}.
+\]</span></p>
+</section>
+</section>
+<section id="limitações" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Limitações</h1>
+<p>Os modelos elástico e acústico descritos acima são idealizações da propagação de ondas na Terra. Cada um deles se apoia em hipóteses que delimitam a sua validade.</p>
+<section id="limitações-do-modelo-elástico" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="limitações-do-modelo-elástico"><span class="header-section-number">6.1</span> Limitações do modelo elástico</h2>
+<ul>
+<li><p><strong>Elasticidade perfeita.</strong> O modelo supõe que o meio retorna ao estado natural sem perda de energia.</p></li>
+<li><p><strong>Isotropia.</strong> A relação constitutiva isotrópica depende apenas de dois parâmetros, <span class="math inline">\(\lambda\)</span> e <span class="math inline">\(\mu\)</span>. Rochas laminadas, folhelhos e meios fraturados são anisotrópicos: as velocidades dependem da direção de propagação e o tensor <span class="math inline">\(c_{ijkl}\)</span> possui mais componentes independentes.</p></li>
+<li><p><strong>Linearidade e pequenas deformações.</strong> O tensor <span class="math inline">\(\epsilon_{ij}\)</span> e a relação constitutiva linear valem para deformações infinitesimais. Perto da fonte, ou para grandes amplitudes, o comportamento é não linear.</p></li>
+</ul>
+</section>
+<section id="limitações-do-modelo-acústico" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="limitações-do-modelo-acústico"><span class="header-section-number">6.2</span> Limitações do modelo acústico</h2>
+<ul>
+<li><p><strong>Contraste fluido–sólido.</strong> A Terra é predominantemente sólida.</p></li>
+<li><p><strong>Ausência de ondas S e de conversão P–S.</strong> Como <span class="math inline">\(\mu=0\)</span>, o modelo não admite ondas S, nem a conversão de modo na interface entre camadas.</p></li>
+</ul>
+</section>
+</section>
+<section id="referências" class="level1 unnumbered">
+<h1 class="unnumbered">Referências</h1>
+<ol type="1">
+<li><p>Aki, K.; Richards, P. G. <em>Quantitative Seismology</em>. 2.<sup>a</sup> ed. Sausalito, CA: University Science Books, 2002.</p></li>
+<li><p>Igel, H. <em>Computational Seismology: A Practical Introduction</em>. Oxford: Oxford University Press, 2017.</p></li>
+<li><p>Riley, K. F.; Hobson, M. P.; Bence, S. J. <em>Mathematical Methods for Physics and Engineering</em>. 7.<sup>a</sup> ed.&nbsp;Cambridge: Cambridge University Press.</p></li>
+<li><p>Axler, S. <em>Linear Algebra Done Right</em>. 4.<sup>a</sup> ed.&nbsp;Cham: Springer,</p>
+<ol start="2024" type="1">
+<li></li>
+</ol></li>
+<li><p>Mund, J. <em>Tensores – Álgebra e Análise</em>. Notas de Aula, Física Matemática II. Departamento de Física, Universidade Federal de Juiz de Fora (UFJF), 2020.</p></li>
+</ol>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.animation <span class="im">import</span> FuncAnimation, PillowWriter</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, Image</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>OUT <span class="op">=</span> Path(<span class="st">'resultados_acustica_elastica'</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>OUT.mkdir(exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>DX <span class="op">=</span> DZ <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>NX, NZ <span class="op">=</span> <span class="dv">161</span>, <span class="dv">101</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>DT, NT <span class="op">=</span> <span class="fl">0.0008</span>, <span class="dv">1550</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>F0, T0 <span class="op">=</span> <span class="fl">10.0</span>, <span class="fl">0.14</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>SRC_X, SRC_Z <span class="op">=</span> <span class="fl">200.0</span>, <span class="fl">110.0</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>REC_X <span class="op">=</span> np.linspace(<span class="dv">150</span>, <span class="dv">1450</span>, <span class="dv">20</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>REC_Z <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>BOUNDARIES <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">180</span>, <span class="dv">380</span>, <span class="dv">650</span>, <span class="dv">1010</span>]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>VP_LAY <span class="op">=</span> np.array([<span class="fl">1500.</span>, <span class="fl">1900.</span>, <span class="fl">2400.</span>, <span class="fl">3000.</span>])</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>VS_LAY <span class="op">=</span> np.array([<span class="fl">650.</span>, <span class="fl">950.</span>, <span class="fl">1300.</span>, <span class="fl">1700.</span>])</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>RHO_LAY <span class="op">=</span> np.array([<span class="fl">1800.</span>, <span class="fl">2000.</span>, <span class="fl">2200.</span>, <span class="fl">2450.</span>])</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(NX)<span class="op">*</span>DX</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.arange(NZ)<span class="op">*</span>DZ</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> np.searchsorted(BOUNDARIES[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>], z, side<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>vp <span class="op">=</span> np.repeat(VP_LAY[layer,<span class="va">None</span>], NX, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>vs <span class="op">=</span> np.repeat(VS_LAY[layer,<span class="va">None</span>], NX, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>rho <span class="op">=</span> np.repeat(RHO_LAY[layer,<span class="va">None</span>], NX, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> rho<span class="op">*</span>vs<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>lam <span class="op">=</span> rho<span class="op">*</span>(vp<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>vs<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> rho<span class="op">*</span>vp<span class="op">**</span><span class="dv">2</span>  <span class="co"># módulo acústico efetivo; não é o bulk elástico 3D</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>bulk_elastic <span class="op">=</span> lam <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>mu<span class="op">/</span><span class="dv">3</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>ixs, izs <span class="op">=</span> <span class="bu">int</span>(<span class="bu">round</span>(SRC_X<span class="op">/</span>DX)), <span class="bu">int</span>(<span class="bu">round</span>(SRC_Z<span class="op">/</span>DZ))</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>ixr <span class="op">=</span> np.rint(REC_X<span class="op">/</span>DX).astype(<span class="bu">int</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>izr <span class="op">=</span> <span class="bu">int</span>(<span class="bu">round</span>(REC_Z<span class="op">/</span>DZ))</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ricker(t):</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> np.pi<span class="op">*</span>F0<span class="op">*</span>(t<span class="op">-</span>T0)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="dv">1</span><span class="op">-</span><span class="dv">2</span><span class="op">*</span>a<span class="op">*</span>a)<span class="op">*</span>np.exp(<span class="op">-</span>a<span class="op">*</span>a)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Para FD 2ª ordem, avaliar pontos por menor comprimento de onda no conteúdo útil.</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>f_eff <span class="op">=</span> <span class="fl">2.5</span><span class="op">*</span>F0</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Courant acústico 2D: </span><span class="sc">{</span>vp<span class="sc">.</span><span class="bu">max</span>()<span class="op">*</span>DT<span class="op">*</span>np<span class="sc">.</span>sqrt(<span class="dv">1</span><span class="op">/</span>DX<span class="op">**</span><span class="dv">2</span><span class="op">+</span><span class="dv">1</span><span class="op">/</span>DZ<span class="op">**</span><span class="dv">2</span>)<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Pontos/λ_min(P) em 2.5 f0: </span><span class="sc">{</span>vp<span class="sc">.</span><span class="bu">min</span>()<span class="op">/</span>(f_eff<span class="op">*</span>DX)<span class="sc">:.1f}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Pontos/λ_min(S) em 2.5 f0: </span><span class="sc">{</span>vs<span class="sc">.</span><span class="bu">min</span>()<span class="op">/</span>(f_eff<span class="op">*</span>DX)<span class="sc">:.1f}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> vp.<span class="bu">max</span>()<span class="op">*</span>DT<span class="op">*</span>np.sqrt(<span class="dv">1</span><span class="op">/</span>DX<span class="op">**</span><span class="dv">2</span><span class="op">+</span><span class="dv">1</span><span class="op">/</span>DZ<span class="op">**</span><span class="dv">2</span>) <span class="op">&lt;</span> <span class="dv">1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="fl">4.6</span>),sharex<span class="op">=</span><span class="va">True</span>,sharey<span class="op">=</span><span class="va">True</span>,constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, data, label <span class="kw">in</span> <span class="bu">zip</span>(axs,[vp,vs,rho],[<span class="st">'Vp (m/s)'</span>,<span class="st">'Vs (m/s)'</span>,<span class="st">'Densidade (kg/m³)'</span>]):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    im<span class="op">=</span>ax.imshow(data,extent<span class="op">=</span>[<span class="dv">0</span>,x[<span class="op">-</span><span class="dv">1</span>],z[<span class="op">-</span><span class="dv">1</span>],<span class="dv">0</span>],aspect<span class="op">=</span><span class="st">'auto'</span>,cmap<span class="op">=</span><span class="st">'viridis'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> zz <span class="kw">in</span> BOUNDARIES[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]: ax.axhline(zz,color<span class="op">=</span><span class="st">'black'</span>,ls<span class="op">=</span><span class="st">'-'</span>,lw<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    ax.plot(SRC_X,SRC_Z,<span class="st">'r*'</span>,ms<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    ax.plot(REC_X,np.full_like(REC_X,REC_Z),<span class="st">'kv'</span>,ms<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Distância x (m)'</span>,title<span class="op">=</span>label)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    fig.colorbar(im,ax<span class="op">=</span>ax,shrink<span class="op">=</span><span class="fl">.8</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_ylabel(<span class="st">'Profundidade z (m)'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Quatro camadas | estrela = fonte | triângulos = 20 receptores'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fig.savefig(OUT<span class="op">/</span><span class="st">'01_modelo_geologico.png'</span>,dpi<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Camada </span><span class="sc">{</span>j<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>BOUNDARIES[j]<span class="sc">:3d}</span><span class="ss">–</span><span class="sc">{</span><span class="bu">min</span>(BOUNDARIES[j<span class="op">+</span><span class="dv">1</span>],<span class="dv">1000</span>)<span class="sc">:4d}</span><span class="ss"> m | Vp=</span><span class="sc">{</span>VP_LAY[j]<span class="sc">:4.0f}</span><span class="ss"> | Vs=</span><span class="sc">{</span>VS_LAY[j]<span class="sc">:4.0f}</span><span class="ss"> m/s | rho=</span><span class="sc">{</span>RHO_LAY[j]<span class="sc">:4.0f}</span><span class="ss"> kg/m³'</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_sponge(width<span class="op">=</span><span class="dv">17</span>, strength<span class="op">=</span><span class="fl">0.032</span>):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Absorção na base, esquerda e direita; NÃO é superfície livre.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    dist_x<span class="op">=</span>np.minimum(np.arange(NX),np.arange(NX)[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#dist_z=np.minimum(np.arange(NZ),np.arange(NZ)[::-1])</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    dist_z<span class="op">=</span>np.arange(NZ)[::<span class="op">-</span><span class="dv">1</span>]   <span class="co"># SEM amortecimento no topo</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    dd<span class="op">=</span>np.minimum(dist_z[:,<span class="va">None</span>],dist_x[<span class="va">None</span>,:])</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.exp(<span class="op">-</span>strength<span class="op">*</span>np.maximum(<span class="dv">0</span>,width<span class="op">-</span>dd)<span class="op">**</span><span class="dv">2</span><span class="op">/</span>width)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#def sponge(width=18,strength=.035):</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    dx_edge=np.minimum(np.arange(NX),np.arange(NX)[::-1])</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    dz_bottom=np.arange(NZ)[::-1]   # SEM amortecimento no topo</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    distance=np.minimum(dz_bottom[:,None],dx_edge[None,:])</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#    return np.exp(-strength*np.maximum(0,width-distance)**2/width)</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#damp=sponge()</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>sponge <span class="op">=</span> make_sponge()</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fatores e densidades nas faces</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>s_x <span class="op">=</span> np.pad(sponge,((<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>)),mode<span class="op">=</span><span class="st">'edge'</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>s_z <span class="op">=</span> np.pad(sponge,((<span class="dv">0</span>,<span class="dv">1</span>),(<span class="dv">0</span>,<span class="dv">0</span>)),mode<span class="op">=</span><span class="st">'edge'</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>s_c <span class="op">=</span> np.pad(sponge,((<span class="dv">0</span>,<span class="dv">1</span>),(<span class="dv">0</span>,<span class="dv">1</span>)),mode<span class="op">=</span><span class="st">'edge'</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>rho_x<span class="op">=</span>np.pad((rho[:,:<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span>rho[:,<span class="dv">1</span>:])<span class="op">/</span><span class="dv">2</span>,((<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">1</span>)),mode<span class="op">=</span><span class="st">'edge'</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>rho_z<span class="op">=</span>np.pad((rho[:<span class="op">-</span><span class="dv">1</span>,:]<span class="op">+</span>rho[<span class="dv">1</span>:,:])<span class="op">/</span><span class="dv">2</span>,((<span class="dv">1</span>,<span class="dv">1</span>),(<span class="dv">0</span>,<span class="dv">0</span>)),mode<span class="op">=</span><span class="st">'edge'</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Módulo de cisalhamento nos cantos (média harmônica)</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>mu_corner<span class="op">=</span>np.pad(<span class="dv">4</span><span class="op">/</span>(<span class="dv">1</span><span class="op">/</span>mu[:<span class="op">-</span><span class="dv">1</span>,:<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span><span class="op">/</span>mu[<span class="dv">1</span>:,:<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span><span class="op">/</span>mu[:<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>:]<span class="op">+</span><span class="dv">1</span><span class="op">/</span>mu[<span class="dv">1</span>:,<span class="dv">1</span>:]),((<span class="dv">1</span>,<span class="dv">1</span>),(<span class="dv">1</span>,<span class="dv">1</span>)),mode<span class="op">=</span><span class="st">'edge'</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="fl">3.5</span>))</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>plt.imshow(sponge,extent<span class="op">=</span>[<span class="dv">0</span>,x[<span class="op">-</span><span class="dv">1</span>],z[<span class="op">-</span><span class="dv">1</span>],<span class="dv">0</span>],aspect<span class="op">=</span><span class="st">'auto'</span>,vmin<span class="op">=</span><span class="dv">0</span>,vmax<span class="op">=</span><span class="dv">1</span>,cmap<span class="op">=</span><span class="st">'viridis'</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Fator de amortecimento por passo (sponge nas bordas)'</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Distância x (m)'</span>)<span class="op">;</span>plt.ylabel(<span class="st">'Profundidade z (m)'</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Multiplicador'</span>)<span class="op">;</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_acoustic(snapshot_every<span class="op">=</span><span class="dv">24</span>):</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    p<span class="op">=</span>np.zeros((NZ,NX))<span class="op">;</span> vx<span class="op">=</span>np.zeros((NZ,NX<span class="op">+</span><span class="dv">1</span>))<span class="op">;</span> vz<span class="op">=</span>np.zeros((NZ<span class="op">+</span><span class="dv">1</span>,NX))</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    seis_p<span class="op">=</span>np.zeros((NT,<span class="bu">len</span>(ixr)))</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    seis_vz<span class="op">=</span>np.zeros_like(seis_p)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    snaps<span class="op">=</span>[]</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> it <span class="kw">in</span> <span class="bu">range</span>(NT):</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>        vx[:,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">-=</span> DT<span class="op">/</span>rho_x[:,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span>(p[:,<span class="dv">1</span>:]<span class="op">-</span>p[:,:<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>DX</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>        vz[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>,:] <span class="op">-=</span> DT<span class="op">/</span>rho_z[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>,:]<span class="op">*</span>(p[<span class="dv">1</span>:,:]<span class="op">-</span>p[:<span class="op">-</span><span class="dv">1</span>,:])<span class="op">/</span>DZ</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>        vx<span class="op">*=</span>s_x<span class="op">;</span> vz<span class="op">*=</span>s_z</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>        div<span class="op">=</span>(vx[:,<span class="dv">1</span>:]<span class="op">-</span>vx[:,:<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>DX<span class="op">+</span>(vz[<span class="dv">1</span>:,:]<span class="op">-</span>vz[:<span class="op">-</span><span class="dv">1</span>,:])<span class="op">/</span>DZ</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>        p <span class="op">-=</span> DT<span class="op">*</span>K<span class="op">*</span>div</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>        p[izs,ixs] <span class="op">+=</span> ricker(it<span class="op">*</span>DT)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>        p<span class="op">*=</span>sponge</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>        seis_p[it]<span class="op">=</span>p[izr,ixr]</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        seis_vz[it]<span class="op">=</span><span class="fl">0.5</span><span class="op">*</span>(vz[izr,ixr]<span class="op">+</span>vz[izr<span class="op">+</span><span class="dv">1</span>,ixr])</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> it<span class="op">%</span>snapshot_every<span class="op">==</span><span class="dv">0</span>: snaps.append((it<span class="op">*</span>DT,p.copy()))</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">'p'</span>:seis_p,<span class="st">'vz'</span>:seis_vz,<span class="st">'snapshots'</span>:snaps}</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>acoustic<span class="op">=</span>simulate_acoustic()</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Simulação acústica concluída:'</span>, acoustic[<span class="st">'p'</span>].shape)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_elastic(snapshot_every<span class="op">=</span><span class="dv">24</span>):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    vx<span class="op">=</span>np.zeros((NZ,NX<span class="op">+</span><span class="dv">1</span>))<span class="op">;</span> vz<span class="op">=</span>np.zeros((NZ<span class="op">+</span><span class="dv">1</span>,NX))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    sxx<span class="op">=</span>np.zeros((NZ,NX))<span class="op">;</span> szz<span class="op">=</span>np.zeros((NZ,NX))<span class="op">;</span> sxz<span class="op">=</span>np.zeros((NZ<span class="op">+</span><span class="dv">1</span>,NX<span class="op">+</span><span class="dv">1</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    seis_vz<span class="op">=</span>np.zeros((NT,<span class="bu">len</span>(ixr)))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    seis_vx<span class="op">=</span>np.zeros_like(seis_vz)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    seis_smean<span class="op">=</span>np.zeros_like(seis_vz)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    snaps<span class="op">=</span>[]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> it <span class="kw">in</span> <span class="bu">range</span>(NT):</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Divergência de tensões nas faces (componentes de velocidade)</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        vx[:,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">+=</span> DT<span class="op">/</span>rho_x[:,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span>(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>            (sxx[:,<span class="dv">1</span>:]<span class="op">-</span>sxx[:,:<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>DX</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span>(sxz[<span class="dv">1</span>:,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]<span class="op">-</span>sxz[:<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>DZ)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        vz[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>,:] <span class="op">+=</span> DT<span class="op">/</span>rho_z[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>,:]<span class="op">*</span>(</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>            (sxz[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>:]<span class="op">-</span>sxz[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>,:<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>DX</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span>(szz[<span class="dv">1</span>:,:]<span class="op">-</span>szz[:<span class="op">-</span><span class="dv">1</span>,:])<span class="op">/</span>DZ)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        vx<span class="op">*=</span>s_x<span class="op">;</span> vz<span class="op">*=</span>s_z</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        exx<span class="op">=</span>(vx[:,<span class="dv">1</span>:]<span class="op">-</span>vx[:,:<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>DX</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        ezz<span class="op">=</span>(vz[<span class="dv">1</span>:,:]<span class="op">-</span>vz[:<span class="op">-</span><span class="dv">1</span>,:])<span class="op">/</span>DZ</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        sxx <span class="op">+=</span> DT<span class="op">*</span>((lam<span class="op">+</span><span class="dv">2</span><span class="op">*</span>mu)<span class="op">*</span>exx<span class="op">+</span>lam<span class="op">*</span>ezz)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        szz <span class="op">+=</span> DT<span class="op">*</span>(lam<span class="op">*</span>exx<span class="op">+</span>(lam<span class="op">+</span><span class="dv">2</span><span class="op">*</span>mu)<span class="op">*</span>ezz)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        sxz[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">+=</span> DT<span class="op">*</span>mu_corner[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span>(</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>            (vx[<span class="dv">1</span>:,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]<span class="op">-</span>vx[:<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>DZ</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span>(vz[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>:]<span class="op">-</span>vz[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>,:<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>DX)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Fonte explosiva isotrópica, sinal oposto à pressão positiva</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        sxx[izs,ixs] <span class="op">-=</span> ricker(it<span class="op">*</span>DT)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        szz[izs,ixs] <span class="op">-=</span> ricker(it<span class="op">*</span>DT)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        sxx<span class="op">*=</span>sponge<span class="op">;</span> szz<span class="op">*=</span>sponge<span class="op">;</span> sxz<span class="op">*=</span>s_c</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        seis_vz[it]<span class="op">=</span><span class="fl">0.5</span><span class="op">*</span>(vz[izr,ixr]<span class="op">+</span>vz[izr<span class="op">+</span><span class="dv">1</span>,ixr])</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        seis_vx[it]<span class="op">=</span><span class="fl">0.5</span><span class="op">*</span>(vx[izr,ixr]<span class="op">+</span>vx[izr,ixr<span class="op">+</span><span class="dv">1</span>])</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        seis_smean[it]<span class="op">=-</span><span class="fl">0.5</span><span class="op">*</span>(sxx[izr,ixr]<span class="op">+</span>szz[izr,ixr])</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> it<span class="op">%</span>snapshot_every<span class="op">==</span><span class="dv">0</span>: snaps.append((it<span class="op">*</span>DT,seis_vz[it].copy(),vz.copy()))</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">'vz'</span>:seis_vz,<span class="st">'vx'</span>:seis_vx,<span class="st">'smean'</span>:seis_smean,<span class="st">'snapshots'</span>:snaps}</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>elastic<span class="op">=</span>simulate_elastic()</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Simulação elástica concluída:'</span>,elastic[<span class="st">'vz'</span>].shape)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tt<span class="op">=</span>np.arange(NT)<span class="op">*</span>DT</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> section(ax, seis, title, cmap<span class="op">=</span><span class="st">'seismic'</span>):</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    scale<span class="op">=</span>np.percentile(np.<span class="bu">abs</span>(seis),<span class="fl">99.5</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> scale<span class="op">&lt;</span><span class="fl">1e-20</span>: scale<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    im<span class="op">=</span>ax.imshow(seis,extent<span class="op">=</span>[REC_X[<span class="dv">0</span>],REC_X[<span class="op">-</span><span class="dv">1</span>],tt[<span class="op">-</span><span class="dv">1</span>],<span class="dv">0</span>],aspect<span class="op">=</span><span class="st">'auto'</span>,cmap<span class="op">=</span>cmap,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                 vmin<span class="op">=-</span>scale,vmax<span class="op">=</span>scale,interpolation<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    ax.<span class="bu">set</span>(title<span class="op">=</span>title,xlabel<span class="op">=</span><span class="st">'Posição dos receptores (m)'</span>,ylabel<span class="op">=</span><span class="st">'Tempo (s)'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> im</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>fig,axs<span class="op">=</span>plt.subplots(<span class="dv">2</span>,<span class="dv">2</span>,figsize<span class="op">=</span>(<span class="dv">13</span>,<span class="dv">9</span>),sharex<span class="op">=</span><span class="va">True</span>,sharey<span class="op">=</span><span class="va">True</span>,constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, data, name <span class="kw">in</span> <span class="bu">zip</span>(axs.flat,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    [acoustic[<span class="st">'p'</span>],acoustic[<span class="st">'vz'</span>],elastic[<span class="st">'vz'</span>],elastic[<span class="st">'vx'</span>]],</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'Acústica: pressão p'</span>,<span class="st">'Acústica: velocidade vertical vz'</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>     <span class="st">'Elástica P–SV: velocidade vertical vz'</span>,<span class="st">'Elástica P–SV: velocidade horizontal vx'</span>]):</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    im<span class="op">=</span>section(ax,data,name)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    fig.colorbar(im,ax<span class="op">=</span>ax,shrink<span class="op">=</span><span class="fl">.72</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Sismogramas sintéticos: acústica × elástica (20 receptores)'</span>,fontsize<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fig.savefig(OUT<span class="op">/</span><span class="st">'02_sismogramas_comparacao.png'</span>,dpi<span class="op">=</span><span class="dv">155</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> section_W(ax, seis, title, scale<span class="op">=</span><span class="fl">0.8</span>, normalize<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.7</span>, fill<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Wiggle plot de uma seção sísmica.</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">    ax : matplotlib.axes</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">        Eixo onde será desenhado o sismograma.</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">    seis : ndarray</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">        Matriz (nt, n_receptores).</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co">    title : str</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">        Título do gráfico.</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co">    scale : float</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">        Fator de escala horizontal dos traços.</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co">    normalize : bool</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co">        True  -&gt; normaliza cada traço individualmente.</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co">        False -&gt; normaliza todos pelo máximo global.</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co">    fill : bool</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co">        Preenche os lóbulos positivos.</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    nrec <span class="op">=</span> seis.shape[<span class="dv">1</span>]</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Espaçamento médio entre receptores</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    dx_rec <span class="op">=</span> np.mean(np.diff(REC_X))</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(nrec):</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>        trace <span class="op">=</span> seis[:, i].copy()</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Normalização</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> normalize:</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>            amp <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(trace))</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>            amp <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(seis))</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> amp <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>            trace <span class="op">/=</span> amp</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Deslocamento horizontal do traço</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>        wiggle <span class="op">=</span> REC_X[i] <span class="op">+</span> trace <span class="op">*</span> dx_rec <span class="op">*</span> scale</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Desenhar traço</span></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>        ax.plot(</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>            wiggle,</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>            tt,</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>color,</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span>linewidth</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Preencher amplitudes positivas</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> fill:</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>            ax.fill_betweenx(</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>                tt,</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>                REC_X[i],</span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>                wiggle,</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>                where<span class="op">=</span>(trace <span class="op">&gt;</span> <span class="dv">0</span>),</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>                color<span class="op">=</span>color,</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>                alpha<span class="op">=</span><span class="fl">0.75</span></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Posição dos receptores (m)'</span>)</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Tempo (s)'</span>)</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(tt[<span class="op">-</span><span class="dv">1</span>], tt[<span class="dv">0</span>])</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>        REC_X[<span class="dv">0</span>] <span class="op">-</span> dx_rec,</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>        REC_X[<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> dx_rec</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>    ax.grid(alpha<span class="op">=</span><span class="fl">0.15</span>)</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>, <span class="dv">2</span>,</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">9</span>),</span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>    sharex<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>    sharey<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>    constrained_layout<span class="op">=</span><span class="va">True</span></span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> [</span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>    acoustic[<span class="st">'p'</span>],</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a>    acoustic[<span class="st">'vz'</span>],</span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>    elastic[<span class="st">'vz'</span>],</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>    elastic[<span class="st">'vx'</span>]</span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>titles <span class="op">=</span> [</span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Acústica: pressão p'</span>,</span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Acústica: velocidade vertical vz'</span>,</span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Elástica P–SV: velocidade vertical vz'</span>,</span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Elástica P–SV: velocidade horizontal vx'</span></span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, data, name <span class="kw">in</span> <span class="bu">zip</span>(axs.flat, datasets, titles):</span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a>    section_W(</span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a>        ax,</span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>        data,</span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>        name,</span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>        scale<span class="op">=</span><span class="fl">0.65</span>,</span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>        normalize<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a>        fill<span class="op">=</span><span class="va">True</span></span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a>fig.suptitle(</span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Sismogramas sintéticos: acústica × elástica (20 receptores)'</span>,</span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">15</span></span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>fig.savefig(</span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a>    OUT <span class="op">/</span> <span class="st">'02_sismogramas_comparacao_wiggle.png'</span>,</span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>    dpi<span class="op">=</span><span class="dv">180</span></span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a>offset<span class="op">=</span>np.<span class="bu">abs</span>(REC_X<span class="op">-</span>SRC_X)</span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>tdirect<span class="op">=</span>np.sqrt(offset<span class="op">**</span><span class="dv">2</span><span class="op">+</span>(SRC_Z<span class="op">-</span>REC_Z)<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span>VP_LAY[<span class="dv">0</span>]<span class="op">+</span>T0</span>
+<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a>tpp<span class="op">=</span>np.sqrt(offset<span class="op">**</span><span class="dv">2</span><span class="op">+</span>(<span class="dv">2</span><span class="op">*</span>BOUNDARIES[<span class="dv">1</span>]<span class="op">-</span>SRC_Z<span class="op">-</span>REC_Z)<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span>VP_LAY[<span class="dv">0</span>]<span class="op">+</span>T0</span>
+<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a>VR <span class="op">=</span> <span class="fl">0.92</span> <span class="op">*</span> VS_LAY[<span class="dv">0</span>]  <span class="co"># Aproximação para a velocidade Rayleigh</span></span>
+<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> SRC_Z <span class="op">/</span> VP_LAY[<span class="dv">0</span>] <span class="op">+</span> offset <span class="op">/</span> VR <span class="op">+</span> T0</span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a>fig,axs<span class="op">=</span>plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>,figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">6</span>),sharey<span class="op">=</span><span class="va">True</span>,constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax,data,title <span class="kw">in</span> <span class="bu">zip</span>(axs,[acoustic[<span class="st">'vz'</span>],elastic[<span class="st">'vz'</span>]],[<span class="st">'Acústica — vz'</span>,<span class="st">'Elástica — vz'</span>]):</span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a>    section_W(ax,data,title)</span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a>    ax.plot(REC_X,tdirect,<span class="st">'k--'</span>,lw<span class="op">=</span><span class="dv">2</span>,label<span class="op">=</span><span class="st">'P direta (estimativa)'</span>)</span>
+<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a>    ax.plot(REC_X,tpp,color<span class="op">=</span><span class="st">'lime'</span>,ls<span class="op">=</span><span class="st">'--'</span>,lw<span class="op">=</span><span class="dv">2</span>,label<span class="op">=</span><span class="st">'PP na 1ª interface (estimativa)'</span>)</span>
+<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a>    ax.plot(REC_X,ts,color<span class="op">=</span><span class="st">'blue'</span>,ls<span class="op">=</span><span class="st">'--'</span>,lw<span class="op">=</span><span class="dv">2</span>,label<span class="op">=</span><span class="st">'Rayleigh (estimativa)'</span>)</span>
+<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a>    ax.legend(loc<span class="op">=</span><span class="st">'lower left'</span>,facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Curvas de tempo ilustrativas — não são picks automáticos'</span>)</span>
+<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a>fig.savefig(OUT<span class="op">/</span><span class="st">'03_interpretacao_aproximada.png'</span>,dpi<span class="op">=</span><span class="dv">155</span>)</span>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a><span class="co"># Reconstituímos o campo elástico de velocidade vertical nos centros das células</span></span>
+<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a><span class="co"># a partir de snapshots salvos nas faces horizontais.</span></span>
+<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>ac_snaps<span class="op">=</span>acoustic[<span class="st">'snapshots'</span>]</span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a>el_snaps<span class="op">=</span>elastic[<span class="st">'snapshots'</span>]</span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(ac_snaps)<span class="op">==</span><span class="bu">len</span>(el_snaps)</span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a>pa<span class="op">=</span>np.array([s[<span class="dv">1</span>] <span class="cf">for</span> s <span class="kw">in</span> ac_snaps])<span class="op">;</span> ve<span class="op">=</span>np.array([<span class="fl">.5</span><span class="op">*</span>(s[<span class="dv">2</span>][:<span class="op">-</span><span class="dv">1</span>,:]<span class="op">+</span>s[<span class="dv">2</span>][<span class="dv">1</span>:,:]) <span class="cf">for</span> s <span class="kw">in</span> el_snaps])</span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a>ca<span class="op">=</span><span class="bu">max</span>(np.percentile(np.<span class="bu">abs</span>(pa),<span class="dv">99</span>),<span class="fl">1e-20</span>)</span>
+<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a>ce<span class="op">=</span><span class="bu">max</span>(np.percentile(np.<span class="bu">abs</span>(ve),<span class="dv">99</span>),<span class="fl">1e-20</span>)</span>
+<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a>fig,axs<span class="op">=</span>plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>,figsize<span class="op">=</span>(<span class="dv">13</span>,<span class="dv">5</span>),sharex<span class="op">=</span><span class="va">True</span>,sharey<span class="op">=</span><span class="va">True</span>,constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a>ims<span class="op">=</span>[]</span>
+<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, cube, scale, name <span class="kw">in</span> <span class="bu">zip</span>(axs,[pa,ve],[ca,ce],[<span class="st">'Pressão acústica'</span>,<span class="st">'Velocidade vertical elástica'</span>]):</span>
+<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a>    im<span class="op">=</span>ax.imshow(cube[<span class="dv">0</span>],extent<span class="op">=</span>[<span class="dv">0</span>,x[<span class="op">-</span><span class="dv">1</span>],z[<span class="op">-</span><span class="dv">1</span>],<span class="dv">0</span>],aspect<span class="op">=</span><span class="st">'auto'</span>,cmap<span class="op">=</span><span class="st">'seismic'</span>,vmin<span class="op">=-</span>scale,vmax<span class="op">=</span>scale)</span>
+<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> depth <span class="kw">in</span> BOUNDARIES[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]: ax.axhline(depth,color<span class="op">=</span><span class="st">'k'</span>,ls<span class="op">=</span><span class="st">':'</span>,lw<span class="op">=</span><span class="fl">.75</span>)</span>
+<span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a>    ax.plot(SRC_X,SRC_Z,<span class="st">'r*'</span>,ms<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a>    ax.plot(REC_X,np.full_like(REC_X,REC_Z),<span class="st">'kv'</span>,ms<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a>    ax.<span class="bu">set</span>(title<span class="op">=</span>name,xlabel<span class="op">=</span><span class="st">'Distância (m)'</span>,ylabel<span class="op">=</span><span class="st">'Profundidade (m)'</span>)</span>
+<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a>    ims.append(im)</span>
+<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a>title<span class="op">=</span>fig.suptitle(<span class="st">''</span>)</span>
+<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update(i):</span>
+<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a>    ims[<span class="dv">0</span>].set_data(pa[i])<span class="op">;</span> ims[<span class="dv">1</span>].set_data(ve[i])</span>
+<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a>    title.set_text(<span class="ss">f'Acústica × elástica | t = </span><span class="sc">{</span>ac_snaps[i][<span class="dv">0</span>]<span class="sc">:.3f}</span><span class="ss"> s'</span>)</span>
+<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="op">*</span>ims,title)</span>
+<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a>anim<span class="op">=</span>FuncAnimation(fig,update,frames<span class="op">=</span><span class="bu">len</span>(ac_snaps),interval<span class="op">=</span><span class="dv">75</span>,blit<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a>gif_path<span class="op">=</span>OUT<span class="op">/</span><span class="st">'04_propagacao_acustica_vs_elastica.gif'</span></span>
+<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a>anim.save(gif_path,writer<span class="op">=</span>PillowWriter(fps<span class="op">=</span><span class="dv">12</span>),dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a>plt.close(fig)</span>
+<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'GIF salvo:'</span>,gif_path)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_gif(frames, times, name, label):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    scale <span class="op">=</span> <span class="bu">max</span>(np.percentile(np.<span class="bu">abs</span>(frames), <span class="fl">99.5</span>), <span class="fl">1e-15</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        layout<span class="op">=</span><span class="st">'constrained'</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> ax.imshow(</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        frames[<span class="dv">0</span>],</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        extent<span class="op">=</span>[<span class="dv">0</span>, x[<span class="op">-</span><span class="dv">1</span>], z[<span class="op">-</span><span class="dv">1</span>], <span class="dv">0</span>],</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'seismic'</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        vmin<span class="op">=-</span>scale,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        vmax<span class="op">=</span>scale,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        aspect<span class="op">=</span><span class="st">'auto'</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fonte sísmica</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    ax.scatter(</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        SRC_X, SRC_Z,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        marker<span class="op">=</span><span class="st">'*'</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        c<span class="op">=</span><span class="st">'gold'</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        s<span class="op">=</span><span class="dv">85</span>,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        zorder<span class="op">=</span><span class="dv">5</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Receptores</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    ax.scatter(</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        REC_X,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        np.full_like(REC_X, REC_Z),</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        marker<span class="op">=</span><span class="st">'v'</span>,</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        c<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        s<span class="op">=</span><span class="dv">15</span>,</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>        zorder<span class="op">=</span><span class="dv">5</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Interfaces das quatro camadas</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> depth <span class="kw">in</span> BOUNDARIES[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]:</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>        ax.axhline(</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>            depth,</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>            linestyle<span class="op">=</span><span class="st">'--'</span>,</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="fl">1.5</span>,</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>            zorder<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    ax.<span class="bu">set</span>(</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>        xlabel<span class="op">=</span><span class="st">'Distância (m)'</span>,</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>        ylabel<span class="op">=</span><span class="st">'Profundidade (m)'</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>    fig.colorbar(img, ax<span class="op">=</span>ax, label<span class="op">=</span>label)</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update(i):</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>        img.set_data(frames[i])</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss"> — t = </span><span class="sc">{</span>times[i]<span class="sc">:.3f}</span><span class="ss"> s'</span>)</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (img,)</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>    ani <span class="op">=</span> FuncAnimation(</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>        fig,</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>        update,</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>        frames<span class="op">=</span><span class="bu">len</span>(frames),</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>        interval<span class="op">=</span><span class="dv">55</span>,</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>        blit<span class="op">=</span><span class="va">False</span></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> OUT <span class="op">/</span> name</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>    ani.save(</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>        path,</span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>        writer<span class="op">=</span>PillowWriter(fps<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>    plt.close(fig)</span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> path</span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Campos acústicos</span></span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>f_ac <span class="op">=</span> np.array([</span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>    s[<span class="dv">1</span>] <span class="cf">for</span> s <span class="kw">in</span> acoustic[<span class="st">'snapshots'</span>]</span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="co"># Campo de velocidade vertical elástica</span></span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>f_el <span class="op">=</span> np.array([</span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.5</span> <span class="op">*</span> (s[<span class="dv">2</span>][:<span class="op">-</span><span class="dv">1</span>, :] <span class="op">+</span> s[<span class="dv">2</span>][<span class="dv">1</span>:, :])</span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> s <span class="kw">in</span> elastic[<span class="st">'snapshots'</span>]</span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a><span class="co"># Tempos dos snapshots</span></span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>tf <span class="op">=</span> np.array([</span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>    s[<span class="dv">0</span>] <span class="cf">for</span> s <span class="kw">in</span> acoustic[<span class="st">'snapshots'</span>]</span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Gerar animações</span></span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>gif_ac <span class="op">=</span> make_gif(</span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>    f_ac,</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>    tf,</span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>    <span class="st">'05_acustica_individual.gif'</span>,</span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Pressão acústica'</span></span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a>gif_el <span class="op">=</span> make_gif(</span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a>    f_el,</span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>    tf,</span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>    <span class="st">'06_elastica_individual.gif'</span>,</span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Velocidade vertical elástica'</span></span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Animações salvas:'</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gif_ac)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<details class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gif_el)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
